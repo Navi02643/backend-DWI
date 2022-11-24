@@ -1,15 +1,54 @@
-const userModel = require("./models/userDTOFunction");
-const userDBFunctions = require("../database/user");
+const userDTO = require("./models/userDTO");
+const userDB = require("../database/user");
 
-async function postUserService(user) {
-  const userData = await userDBFunctions.saveUser(user);
-  return userData;
+const bcrypt = require("bcrypt");
+
+async function saveUser(user) {
+  const userData = user;
+  const userFound = await userDB.findEmail(user.email);
+  if (userFound) {
+    return "The email is already registered";
+  }
+  bcrypt.hash(user.password, 10, async (err, hash) => {
+    if (err) return err;
+    userData.password = hash;
+    const userDataSave = await userDB.saveUser(user);
+    return userDataSave;
+  });
 }
 
-async function postLoginService(user) {
-  const isUserLogin = await userDBFunctions.findUser(user);
-  const newLoginModel = userModel.userLoginDTO(isUserLogin);
-  return newLoginModel;
+async function userLogin(user) {
+  const userFound = await userDB.findEmail(user.email);
+  const isCorrectPassword = await bcrypt.compare(
+    user.password,
+    userFound.password
+  );
+  if (isCorrectPassword) {
+    const successfulLogin = userDTO.loginData(userFound);
+    return successfulLogin;
+  }
+  return "Incorrect email or password";
 }
 
-module.exports = { postUserService, postLoginService };
+async function recoverPassword(userData) {
+  const userFound = await userDB.findEmail(userData.email);
+  if (userFound) {
+    const isCorrectPassword = await bcrypt.compare(
+      userData.oldPassword,
+      userFound.password
+    );
+    if (isCorrectPassword) {
+      const userId = userDTO.filterId(userFound);
+      bcrypt.hash(userData.newPassword, 10, async (err, hash) => {
+        if (err) return err;
+        const password = hash
+        const update = await userDB.updatePassword(userId, password);
+      });
+      return 'Password update';
+    }
+    return "Incorrect password";
+  }
+  return "Email not found";
+}
+
+module.exports = { userLogin, saveUser, recoverPassword };

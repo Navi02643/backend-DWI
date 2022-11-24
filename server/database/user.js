@@ -6,12 +6,17 @@ async function saveUser(user) {
   return newUser;
 }
 
-async function findUser(user) {
-  const findUser = await userModel.findOne({
-    email: `${user.email}`,
-    password: `${user.password}`,
-  });
-  return findUser;
+async function findEmail(email) {
+  const userFind = await userModel.findOne({ email });
+  return userFind;
 }
 
-module.exports = { saveUser, findUser };
+async function updatePassword(id, password) {
+  const updateUser = await userModel.findByIdAndUpdate(
+    id,
+    { $set: {password: password} },
+  );
+  return updateUser;
+}
+
+module.exports = { saveUser, findEmail, updatePassword};
