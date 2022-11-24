@@ -2,8 +2,7 @@ const userModel = require("./models/userDTOFunction");
 const userDBFunctions = require("../database/user");
 
 async function postUserService(user) {
-  const newUserModel = userModel.userDTO(user);
-  const userData = await userDBFunctions.saveUser(newUserModel);
+  const userData = await userDBFunctions.saveUser(user);
   return userData;
 }
 

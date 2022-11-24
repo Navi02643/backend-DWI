@@ -1,15 +1,6 @@
-function userDTO(user) {
-  return (user = {
-    userName: user.userName,
-    userMiddleName: user.userMiddleName,
-    userLastName: user.userLastName,
-    email: user.email,
-    password: user.password,
-  });
-}
-
 async function userLoginDTO(user) {
   return (user = {
+    id: user._id,
     fullName:
       user.userName +
       " " +
@@ -22,4 +13,4 @@ async function userLoginDTO(user) {
 }
 
 
-module.exports = { userDTO, userLoginDTO };
+module.exports = {  userLoginDTO };
