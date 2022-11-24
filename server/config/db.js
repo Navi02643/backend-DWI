@@ -5,10 +5,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 
 if (process.env.NODE_ENV === "dev") {
   process.env.URLDB =
-    "mongodb+srv://Admin:admin1234@arkusnexus.d1uky.mongodb.net/encyclopedic?retryWrites=true&w=majority";
+    "mongodb+srv://Admin:admin1234@arkusnexus.d1uky.mongodb.net/encyclopedia?retryWrites=true&w=majority";
 } else {
   process.env.URLDB =
-    "mongodb+srv://Admin:admin1234@arkusnexus.d1uky.mongodb.net/encyclopedic?retryWrites=true&w=majority";
+    "mongodb+srv://Admin:admin1234@arkusnexus.d1uky.mongodb.net/encyclopedia?retryWrites=true&w=majority";
 }
 
 process.middlewares = [];
