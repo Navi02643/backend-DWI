@@ -22,6 +22,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use("/api", require("./server/routes/index"));
+app.use("/api", require("./server/routes/category"))
 
 app.use((req, res, next) => {
   return res.status(404).send({
