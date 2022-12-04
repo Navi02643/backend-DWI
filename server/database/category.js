@@ -6,4 +6,14 @@ async function saveCategory(category) {
   return newCategory;
 }
 
-module.exports = { saveCategory};
+async function findCategoryByName(name){
+  const findCategory = await categoryModel.findOne({'name':name});
+  return findCategory;
+}
+
+async function findCategory() {
+  const categories = await categoryModel.find();
+  return categories;
+}
+
+module.exports = { saveCategory, findCategoryByName, findCategory};

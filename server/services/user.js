@@ -12,7 +12,7 @@ async function saveUser(user) {
   bcrypt.hash(user.password, 10, async (err, hash) => {
     if (err) return err;
     userData.password = hash;
-    const userDataSave = await userDB.saveUser(user);
+    const userDataSave = await userDB.saveUser(userData);
     return userDataSave;
   });
 }
@@ -23,6 +23,7 @@ async function userLogin(user) {
     user.password,
     userFound.password
   );
+  console.log(isCorrectPassword);
   if (isCorrectPassword) {
     const successfulLogin = userDTO.loginData(userFound);
     return successfulLogin;
@@ -41,14 +42,36 @@ async function recoverPassword(userData) {
       const userId = userDTO.filterId(userFound);
       bcrypt.hash(userData.newPassword, 10, async (err, hash) => {
         if (err) return err;
-        const password = hash
+        const password = hash;
         const update = await userDB.updatePassword(userId, password);
       });
-      return 'Password update';
+      return "Password update";
     }
     return "Incorrect password";
   }
   return "Email not found";
 }
 
-module.exports = { userLogin, saveUser, recoverPassword };
+async function inactivateUser(user) {
+  const userInactivate = await userDB.inactivateUser(user.id);
+  return "User Inactive";
+}
+
+async function activateUser(user) {
+  const userActivate = await userDB.reactivateUser(user.id);
+  return "User Inactive";
+}
+
+async function deleteUser(user) {
+  const userDelete = await userDB.deleteUser(user.id);
+  return "User Inactive";
+}
+
+module.exports = {
+  userLogin,
+  saveUser,
+  recoverPassword,
+  inactivateUser,
+  activateUser,
+  deleteUser,
+};
