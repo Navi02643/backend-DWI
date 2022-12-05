@@ -12,11 +12,36 @@ async function findEmail(email) {
 }
 
 async function updatePassword(id, password) {
-  const updateUser = await userModel.findByIdAndUpdate(
-    id,
-    { $set: {password: password} },
-  );
+  const updateUser = await userModel.findByIdAndUpdate(id, {
+    $set: { password: password },
+  });
   return updateUser;
 }
 
-module.exports = { saveUser, findEmail, updatePassword};
+async function inactivateUser(id) {
+  const inactivateUser = await userModel.findByIdAndUpdate(id, {
+    $set: { active: false },
+  });
+  return inactivateUser;
+}
+
+async function reactivateUser(id) {
+  const activateUser = await userModel.findByIdAndUpdate(id, {
+    $set: { active: true },
+  });
+  return activateUser;
+}
+
+async function deleteUser(id) {
+  const activateUser = await userModel.findByIdAndDelete(id);
+  return activateUser;
+}
+
+module.exports = {
+  saveUser,
+  findEmail,
+  updatePassword,
+  inactivateUser,
+  reactivateUser,
+  deleteUser,
+};

@@ -5,15 +5,15 @@ function categoryDate(category){
     });
 }
 
-function categoryFilter(categories){
-    const categoriesAux = [];
+function categoryFilter(categories) {
+    const categoriesAux = []
     categories.forEach(category => {
-        if (category) {
+        if(category){
             let dataCategory = {
                 id: category._id,
                 name: category.categoryName
             }
-            categoriesAux.push(dataCategory);
+            categoriesAux.push(dataCategory)
         }
     });
     return categoriesAux;
