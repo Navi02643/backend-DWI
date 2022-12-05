@@ -9,7 +9,7 @@ const articleSchema = new Schema({
     type: Date,
   },
   articleContent: {
-    type: Text,
+    type: String,
   },
   categoryId: {
     type: Schema.Types.ObjectId,

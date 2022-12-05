@@ -1,14 +1,14 @@
-const categoryService = require("../services/category");
+const articleService = require("../services/article");
 
 const express = require("express");
-const { db } = require("../database/models/category");
 const app = express(); 
 
 app.get("/", async (req, res) =>{
     try {
-      const data = await categoryService.findCategories();
-
-      return res.status(200).json({data})
+      const data = await articleService.findArticles()
+      return res.status(200).json({
+        data,
+      });
     } catch (error) {
       return res.status(500).send({
         estatus: "500",
@@ -23,9 +23,9 @@ app.get("/", async (req, res) =>{
 
 app.post("/", async (req, res) => {
     try {
-      const categorySave = await categoryService.saveCategory(req.body);
+      const data = await articleService.saveArticle(req.body);
       return res.status(200).json({
-        categorySave,
+        data,
       });
     } catch (err) {
       return res.status(500).send({
@@ -42,18 +42,39 @@ app.post("/", async (req, res) => {
   app.put('/:id', async (req, res) => {
     try {
       let _id = req.params.id;
-      let {categoryName} = req.body;
-      await categoryService.updateCategories({categoryName}, {
+      let {articleName, articleContent} = req.body;
+      await articleService.updateArticles({articleName, articleContent}, {
         where: {
           _id,
         },
       });
-      res.status(200).send('Categoría actualizada');
+      res.status(200).send('Artículo actualizado');
     } catch (error) {
       return res.status(500).send({
         estatus: "500",
         err: true,
-        msg: "No se pudo actualizar la categoría",
+        msg: "No se pudo actualizar el artículo",
+        cont: {
+          err: Object.keys(err).length === 0 ? err.message : err,
+        },
+      });
+    }
+  });
+
+  app.delete('/:id', async (req, res) => {
+    try {
+      let _id = req.params.id;
+      await articleService.deleteArticles({
+        where: {
+          _id,
+        },
+      });
+      res.status(200).send('Artículo eliminado');
+    } catch (error) {
+      return res.status(500).send({
+        estatus: "500",
+        err: true,
+        msg: "No se pudo eliminar el artículo",
         cont: {
           err: Object.keys(err).length === 0 ? err.message : err,
         },
