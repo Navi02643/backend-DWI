@@ -7,6 +7,7 @@ const articleSchema = new Schema({
   },
   publicationDate: {
     type: Date,
+    default: mongoose.now()
   },
   articleContent: {
     type: String,
@@ -25,6 +26,7 @@ const articleSchema = new Schema({
   },
   updateDate: {
     type: Date,
+    default: mongoose.now()
   },
 });
 

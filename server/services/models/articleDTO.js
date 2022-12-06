@@ -1,7 +1,7 @@
 function articleDate(article) {
     return (article = {
         id: article._id,
-        name: article.articleName
+        name: article.articleName,
     })
 }
 
@@ -11,7 +11,8 @@ function articleFilter(articles) {
         if(article){
             let dataArticle = {
                 id: article._id,
-                name: article.articleName
+                name: article.articleName,
+                category: article.categoryId[0].categoryName
             }
             articlesAux.push(dataArticle)
         }

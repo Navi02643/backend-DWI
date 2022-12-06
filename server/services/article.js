@@ -3,7 +3,7 @@ const databaseFunctions = require('../database/article');
 
 async function saveArticle(article) {
     const articleFind = await databaseFunctions.findArticleByName(article.articleName)
-    if (articleFind.articleName == article.articleName) return "Ya existe este artículo"
+    //if (articleFind.articleName) return "Ya existe este artículo"
     const articleSave = await databaseFunctions.saveArticle(article);
     const filterDataArticle = articleDTO.articleDate(articleSave)
     return filterDataArticle
@@ -11,6 +11,7 @@ async function saveArticle(article) {
 
 async function findArticles() {
     const articlesFind = await databaseFunctions.findArticle();
+
     const filterArticles = articleDTO.articleFilter(articlesFind);
     return filterArticles;
 }
