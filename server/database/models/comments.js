@@ -10,8 +10,9 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
-  CommentDate: {
-    type: Text,
+  commentDate: {
+    type: Date,
+    default: mongoose.now(),
   },
   comment: {
     type: String,

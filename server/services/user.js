@@ -23,7 +23,6 @@ async function userLogin(user) {
     user.password,
     userFound.password
   );
-  console.log(isCorrectPassword);
   if (isCorrectPassword) {
     const successfulLogin = userDTO.loginData(userFound);
     return successfulLogin;

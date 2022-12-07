@@ -15,6 +15,10 @@ const forumSchema = new Schema({
   publicationDate: {
     type: Date,
   },
+  open: {
+    type: Boolean,
+    default: true
+  }
 });
 
 module.exports = mongoose.model("forum", forumSchema);
