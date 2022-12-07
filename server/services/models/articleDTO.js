@@ -12,7 +12,8 @@ function articleFilter(articles) {
             let dataArticle = {
                 id: article._id,
                 name: article.articleName,
-                category: article.categoryId[0].categoryName
+                category: article.categoryId[0].categoryName,
+                autor: article.authorId[0].userName
             }
             articlesAux.push(dataArticle)
         }

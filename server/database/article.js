@@ -11,9 +11,9 @@ async function findArticle() {
       },
       $lookup: {
         from: "users",
-        localField: "",
-        foreignField: "",
-        as: "",
+        localField: "authorId",
+        foreignField: "_id",
+        as: "authorId",
       },
     },
   ]);
