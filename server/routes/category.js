@@ -25,7 +25,6 @@ app.post("/", async (req, res) => {
     try {
       const data = await categoryService.saveCategory(req.body);
       return res.status(200).json({
-        categorySave,
         data,
       });
     } catch (err) {
@@ -40,21 +39,17 @@ app.post("/", async (req, res) => {
     }
   });
 
-  app.put('/:id', async (req, res) => {
+  app.put('/', async (req, res) => {
     try {
-      let _id = req.params.id;
-      let {categoryName} = req.body;
-      await categoryService.updateCategories({categoryName}, {
-        where: {
-          _id,
-        },
-      });
+      let _id = req.query.id;
+      let categoryName = req.body.categoryName;
+      await categoryService.updateCategories(_id,categoryName);
       res.status(200).send('Categoría actualizada');
-    } catch (error) {
+    } catch (err) {
       return res.status(500).send({
         estatus: "500",
         err: true,
-        msg: "No se pudo actualizar la categoría",
+        msg: "Error",
         cont: {
           err: Object.keys(err).length === 0 ? err.message : err,
         },

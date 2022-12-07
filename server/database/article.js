@@ -4,16 +4,18 @@ async function findArticle() {
   const articles = await articleModel.aggregate([
     {
       $lookup: {
-        from: "categories",
-        localField: "categoryId",
-        foreignField: "_id",
-        as: "categoryId",
-      },
-      $lookup: {
         from: "users",
         localField: "authorId",
         foreignField: "_id",
         as: "authorId",
+      },
+    },
+    {
+      $lookup: {
+        from: "categories",
+        localField: "categoryId",
+        foreignField: "_id",
+        as: "categoryId",
       },
     },
   ]);
@@ -31,24 +33,19 @@ async function saveArticle(article) {
   return newArticle;
 }
 
-async function updateArticle(_id, data) {
+async function updateArticle(id, data) {
   const newArticle = new articleModel(data);
-  const updateArt = await articleModel.updateOne(
-    { _id: _id },
+  const updateArt = await articleModel.findByIdAndUpdate(
+    {id},
     { $set: newArticle }
   );
   return updateArt;
 }
 
-async function deleteArticle(_id) {
-  const deleteArt = await articleModel.deleteOne({ _id: _id });
-  return deleteArt;
-}
 
 module.exports = {
   findArticle,
   findArticleByName,
   saveArticle,
   updateArticle,
-  deleteArticle,
 };

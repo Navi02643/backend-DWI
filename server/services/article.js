@@ -1,36 +1,30 @@
 const articleDTO = require("./models/articleDTO");
 const databaseFunctions = require('../database/article');
+const userDB = require('../database/user')
 
 async function saveArticle(article) {
     const articleFind = await databaseFunctions.findArticleByName(article.articleName)
-    //if (articleFind.articleName) return "Ya existe este artículo"
+    if (articleFind !== null){
+        if (articleFind.articleName) return "Ya existe este artículo"
+    }
     const articleSave = await databaseFunctions.saveArticle(article);
-    const filterDataArticle = articleDTO.articleDate(articleSave)
-    return filterDataArticle
+    return articleSave
 }
 
 async function findArticles() {
     const articlesFind = await databaseFunctions.findArticle();
-
     const filterArticles = articleDTO.articleFilter(articlesFind);
     return filterArticles;
 }
 
-async function updateArticles(_id){
-    const articlesUpdate = await categoryDB.updateArticle(_id);
-
+async function updateArticles(id,data){
+    const articlesUpdate = await categoryDB.updateArticle(id,data);
     return articlesUpdate;
 }
 
-async function deleteArticles(_id){
-    const articlesDelete = await categoryDB.deleteArticle(_id);
-
-    return articlesDelete;
-}
 
 module.exports = { 
     saveArticle, 
     findArticles,
     updateArticles,
-    deleteArticles
 }

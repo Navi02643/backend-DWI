@@ -9,12 +9,10 @@ async function saveUser(user) {
   if (userFound) {
     return "The email is already registered";
   }
-  bcrypt.hash(user.password, 10, async (err, hash) => {
-    if (err) return err;
-    userData.password = hash;
-    const userDataSave = await userDB.saveUser(userData);
-    return userDataSave;
-  });
+  const hash = await bcrypt.hash(user.password, 10,)
+  userData.password = hash;
+  const userDataSave = await userDB.saveUser(userData);
+  return userDataSave;
 }
 
 async function userLogin(user) {

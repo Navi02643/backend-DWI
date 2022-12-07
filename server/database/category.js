@@ -7,7 +7,8 @@ async function findCategory(){
 }
 
 async function findCategoryByName(name){
-  const findCategory = await categoryModel.findOne({'name':name});
+  console.log(name);
+  const findCategory = await categoryModel.findOne({'categoryName':name});
 
   return findCategory;
 }
@@ -18,9 +19,8 @@ async function saveCategory(category) {
   return newCategory;
 }
 
-async function updateCategory(_id){
-  const updateCat = await categoryModel.updateOne({'_id':_id});
-
+async function updateCategory(id,name){
+  const updateCat = await categoryModel.findOneAndUpdate(id,{$set: {categoryName: name}});
   return updateCat;
 }
 

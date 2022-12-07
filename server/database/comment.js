@@ -7,6 +7,9 @@ async function searchComments(id) {
       $match: {forumId: mongo.ObjectId(id)}
     },
     {
+      $sort: {commentDate: -1}
+    },
+    {
       $lookup: {
         from: "users",
         localField: "authorId",
