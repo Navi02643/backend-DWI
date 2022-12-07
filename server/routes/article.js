@@ -9,7 +9,7 @@ app.get("/", async (req, res) =>{
       return res.status(200).json({
         data,
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(500).send({
         estatus: "500",
         err: true,
@@ -37,7 +37,7 @@ app.post("/", async (req, res) => {
         },
       });
     }
-  });
+});
 
   app.put('/:id', async (req, res) => {
     try {
